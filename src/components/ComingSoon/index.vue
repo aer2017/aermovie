@@ -28,20 +28,27 @@ export default {
   data() {
     return {
       comingList: [],
-      isLoading: true
+      isLoading: true,
+      prevCityId: -1
     };
   },
-  methods:{
-    handleToDetail(movieId){
-      this.$router.push('/movie/detail/2/'+movieId)
+  methods: {
+    handleToDetail(movieId) {
+      this.$router.push("/movie/detail/2/" + movieId);
     }
   },
-  mounted() {
-    this.axios.get("/api/movieComingList?cityId=10").then(res => {
+  activated() {
+    var cityId = this.$store.state.city.id;
+    if (cityId == this.prevCityId) {
+      return;
+    }
+    this.isLoading = true;
+    this.axios.get("/api/movieComingList?cityId=" + cityId).then(res => {
       var msg = res.data.msg;
       if (msg === "ok") {
         this.comingList = res.data.data.comingList;
         this.isLoading = false;
+        this.prevCityId = cityId;
       }
     });
   }

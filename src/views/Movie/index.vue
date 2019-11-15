@@ -35,31 +35,31 @@ export default {
     TagBar
   },
   mounted() {
-    setTimeout(() => {
-      this.axios.get("/api/getLocation").then(res => {
-        var msg = res.data.msg;
-        if (msg === "ok") {
-          var nm = res.data.data.nm;
-          var id = res.data.data.id;
-          if (this.$store.state.city.id == id) {
-            return;
-          }
-          messageBox({
-            title: "定位",
-            content: nm,
-            cancel: "取消",
-            ok: "切换定位",
-            handleOk() {
-              window.localStorage.setItem("nowNm", nm);
-              window.localStorage.setItem("nowId", id);
-              window.location.reload();
-            }
-          });
-        }
-      });
-    }, 500);
+  //   setTimeout(() => {
+  //     this.axios.get("/api/getLocation").then(res => {
+  //       var msg = res.data.msg;
+  //       if (msg === "ok") {
+  //         var nm = res.data.data.nm||"深圳";
+  //         var id = res.data.data.id;
+  //         if (this.$store.state.city.id == id) {
+  //           return;
+  //         }
+  //         messageBox({
+  //           title: "定位",
+  //           content: nm,
+  //           cancel: "取消",
+  //           ok: "切换定位",
+  //           handleOk() {
+  //             window.localStorage.setItem("nowNm", nm);
+  //             window.localStorage.setItem("nowId", id);
+  //             window.location.reload();
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }, 500);
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

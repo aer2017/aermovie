@@ -35,21 +35,28 @@ export default {
     return {
       movieList: [],
       pullDownMsg: "",
-      isLoading: "true"
+      isLoading: "true",
+      prevCityId: -1
     };
   },
-  mounted() {
-    this.axios.get("/api/movieOnInfoList?cityId=10").then(res => {
+  activated() {
+    var cityId = this.$store.state.city.id;
+    if (cityId == this.prevCityId) {
+      return;
+    }
+    this.isLoading = true;
+    this.axios.get("/api/movieOnInfoList?cityId=" + cityId).then(res => {
       var msg = res.data.msg;
       if (msg === "ok") {
         this.movieList = res.data.data.movieList;
         this.isLoading = false;
+        this.prevCityId = cityId;
       }
     });
   },
   methods: {
     handleToDetail(movieId) {
-      this.$router.push('/movie/detail/1/'+movieId)
+      this.$router.push("/movie/detail/1/" + movieId);
     },
     handleToScroll(pos) {
       if (pos.y > 30) {
